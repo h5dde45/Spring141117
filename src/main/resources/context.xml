@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+
+       default-init-method="initObject"
+       default-destroy-method="destroyObject"
+       default-lazy-init="true"
+>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="dt.build"/>
+
+    <bean id="t1000" class="dt.build.impl.rob.Mod1000"
+    >
+        <!--<constructor-arg ref="snhe"/>-->
+        <!--<constructor-arg ref="snha"/>-->
+        <!--<constructor-arg ref="snle"/>-->
+        <constructor-arg value="string"/>
+        <constructor-arg value="33"/>
+        <constructor-arg value="false"/>
+
+        <!--<property name="head" ref="the"/>-->
+        <!--<property name="hand" ref="tha"/>-->
+        <!--<property name="leg" ref="tle"/>-->
+    </bean>
+    <bean id="Empty" class="dt.build.impl.rob.Mod1000">
+
+        <property name="head" ref="snHead"/>
+        <property name="hand" ref="snHadn"/>
+        <property name="leg" ref="snLeg"/>
+    </bean>
+
+    <!--<bean id="snhe" class="dt.build.impl.sn.SnHead"/>-->
+    <!--<bean id="snha" class="dt.build.impl.sn.SnHadn"/>-->
+    <!--<bean id="snle" class="dt.build.impl.sn.SnLeg"/>-->
+
+    <!--<bean id="the" class="dt.build.impl.tsh.TshHead" autowire-candidate="false"/>-->
+    <!--<bean id="tha" class="dt.build.impl.tsh.TsbHand" autowire-candidate="false"/>-->
+    <!--<bean id="tle" class="dt.build.impl.tsh.TsbLeg" autowire-candidate="false"/>-->
+
+    <bean id="t1000Conv" class="dt.build.interfaces.RobConv">
+        <lookup-method name="createRob" bean="t1000"/>
+    </bean>
+
+</beans>

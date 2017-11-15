@@ -4,10 +4,20 @@ import dt.build.interfaces.Hand;
 import dt.build.interfaces.Head;
 import dt.build.interfaces.Leg;
 import dt.build.interfaces.Rob;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class Mod1000 implements Rob {
+    @Qualifier("tshHead")
+    @Autowired
     private Head head;
+
+    @Qualifier("snHadn")
+    @Autowired
     private Hand hand;
+
+    @Qualifier("tsbLeg")
+    @Autowired
     private Leg leg;
 
     private String string;
@@ -99,5 +109,14 @@ public class Mod1000 implements Rob {
     @Override
     public void secondAction() {
         System.out.println("secondAction");
+    }
+
+
+    public void initObject() {
+        System.out.println("initObject");
+    }
+
+    public void destroyObject() {
+        System.out.println("destroyObject");
     }
 }
