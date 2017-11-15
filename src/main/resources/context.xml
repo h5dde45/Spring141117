@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
 
        default-init-method="initObject"
        default-destroy-method="destroyObject"
@@ -10,7 +11,16 @@
 >
 
     <context:annotation-config/>
-    <context:component-scan base-package="dt.build"/>
+    <context:component-scan base-package="dt"/>
+
+    <aop:config>
+        <aop:aspect id="log" ref="newLogger">
+            <aop:pointcut id="getValue" expression="execution(* dt.aop.objects.SomeService.*(..))"/>
+            <aop:before method="init" pointcut-ref="getValue"/>
+            <aop:after method="close" pointcut-ref="getValue"/>
+            <aop:after-returning method="printValue" pointcut-ref="getValue" returning="obj"/>
+        </aop:aspect>
+    </aop:config>
 
     <bean id="t1000" class="dt.build.impl.rob.Mod1000"
     >
@@ -42,6 +52,11 @@
 
     <bean id="t1000Conv" class="dt.build.interfaces.RobConv">
         <lookup-method name="createRob" bean="t1000"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.sqlite.JDBC"/>
+        <property name="url" value="jdbc:sqlite:db/MP3.db"/>
     </bean>
 
 </beans>
