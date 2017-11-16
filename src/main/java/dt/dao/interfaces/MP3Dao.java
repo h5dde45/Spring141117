@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface MP3Dao {
-    int insert(MP3 mp3);
+    int insertMP3(MP3 mp3);
 
-    void insert(List<MP3> mp3List);
+    void insertMP3(List<MP3> mp3List);
 
     Map<String,Integer> getStat();
 
